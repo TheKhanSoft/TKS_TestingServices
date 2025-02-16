@@ -64,4 +64,24 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function testAttempts()
+    {
+        return $this->hasMany(TestAttempt::class);
+    }
+
+    // Scopes
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeSearch($query, $searchTerm)
+    {
+        return $query->where('name', 'like', "%{$searchTerm}%")
+                     ->orWhere('email', 'like', "%{$searchTerm}%");
+    }
+
+    // Eager Loading - Consider if UserCategory is frequently needed
+    // protected $with = ['userCategory'];
 }

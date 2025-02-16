@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes; // Added Soft Deletes
 
-class Department extends Model
+class UserCategory extends Model // Categories for Users (e.g., "Undergraduate", "Graduate", "Professional")
 {
     use HasFactory, SoftDeletes; // Use SoftDeletes trait
 
@@ -14,14 +14,14 @@ class Department extends Model
     protected $dates = ['deleted_at']; // To enable soft deletes
 
     // Relationships
-    public function subjects()
+    public function papers()
     {
-        return $this->belongsToMany(Subject::class, 'department_subject');
+        return $this->belongsToMany(Paper::class, 'paper_user_category');
     }
 
-    public function facultyMembers()
+    public function users()
     {
-        return $this->hasMany(FacultyMember::class);
+        return $this->hasMany(User::class); // Assuming you have a User model
     }
 
     // Scopes
